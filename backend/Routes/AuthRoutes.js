@@ -35,4 +35,15 @@ const loginValidation = [
     .withMessage('password is required')
 ];
 
+// public routes 
+router.post('/register',registerValidation, register);
+router.post('/login', loginValidation, login);
+
+//protected routes
+router.get('/profile', protect, getProfile);
+router.get('/profile', protect, updateProfile);
+router.post('/change-password', protect, changePassword);
+
+export default router;
+
 
