@@ -17,10 +17,12 @@ const registerValidation = [
     .trim()
     .isLength({min:3})
     .withMessage('username must be atleast 3 characters long'),
+
     body('email')
     .isEmail()
-    .normalizeEmail()
-    .withMessage('please provide valide email'),
+    .withMessage('please provide valide email')
+    .normalizeEmail(),
+    
     body('password')
     .isLength({min: 6})
     .withMessage('password must be 6 character long')
@@ -28,11 +30,13 @@ const registerValidation = [
 
 const loginValidation = [
     body('email')
-    .normalizeEmail()
-    .withMessage('please enter valide email'),
+        .isEmail()
+        .withMessage('please enter valid email')
+        .normalizeEmail(),
+
     body('password')
-    .notEmpty()
-    .withMessage('password is required')
+        .notEmpty()
+        .withMessage('password is required')
 ];
 
 // public routes 
