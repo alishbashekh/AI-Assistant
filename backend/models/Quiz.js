@@ -51,7 +51,7 @@ const quizSchema = new mongoose.Schema({
         },
         isCorrect: {
           type: Boolean,
-          required: ture
+          required: true
         },
         answeredAt:{
             type: Date,
