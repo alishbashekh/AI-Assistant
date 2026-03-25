@@ -210,13 +210,4 @@ export const deleteDocument = async (req, res, next)=>{
     }
 };
 
-//@desc update document title
-//@route PUT /api/documents/:id
-export const updateDocument = async (req, res, next)=>{
-     try{
-      
-    }catch (error){
-     next(error);
-    }
-};
 
