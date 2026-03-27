@@ -1,28 +1,25 @@
 import fs from "fs/promises";
-import { createRequire } from "module";
-
-const require = createRequire(import.meta.url);
-const pdf = require("pdf-parse");
+import * as pdfParse from "pdf-parse"; // Import entire module as namespace
 
 /**
- * extract text from pdf file
- * @param {string} filePath - path to pdf file
- * @returns {Promise<{text: string, numPages: number}>}
+ * Extract text from a PDF file
+ * @param {string} filePath
+ * @returns {Promise<{text: string, numPages: number, info: object}>}
  */
-
 export const extractTextFromPDF = async (filePath) => {
   try {
     const dataBuffer = await fs.readFile(filePath);
 
-    // pdf-parse is a function, not a class
-    const data = await pdf(dataBuffer);
+    // pdfParse is a namespace, the function is the module itself
+    const data = await pdfParse.default
+      ? await pdfParse.default(dataBuffer)
+      : await pdfParse(dataBuffer);
 
     return {
       text: data.text,
       numPages: data.numpages,
       info: data.info,
     };
-
   } catch (error) {
     console.error("PDF parsing error:", error);
     throw new Error("Failed to extract text from PDF");
