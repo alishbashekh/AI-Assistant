@@ -12,13 +12,13 @@ import QuizResult from './pages/quizzes/QuizResult';
 import Profilepage from './pages/profile/profilepage';
 import FlashCardPage from './pages/Flashcards/flashCardPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
+import { useAuth } from './context/AuthContext';
 
 
 
 const App = () => {
    
-  const isAuthenticated = false
-  const loading = false
+   const {isAuthenticated, loading} = useAuth();
   
    if(loading){
       return(
