@@ -1,24 +1,26 @@
 import fs from "fs/promises";
-import * as pdfParse from "pdf-parse"; // Import entire module as namespace
+import * as pdfjsLib from "pdfjs-dist/legacy/build/pdf.mjs";
 
-/**
- * Extract text from a PDF file
- * @param {string} filePath
- * @returns {Promise<{text: string, numPages: number, info: object}>}
- */
 export const extractTextFromPDF = async (filePath) => {
   try {
     const dataBuffer = await fs.readFile(filePath);
+    const uint8Array = new Uint8Array(dataBuffer);
 
-    // pdfParse is a namespace, the function is the module itself
-    const data = await pdfParse.default
-      ? await pdfParse.default(dataBuffer)
-      : await pdfParse(dataBuffer);
+    const loadingTask = pdfjsLib.getDocument({ data: uint8Array });
+    const pdf = await loadingTask.promise;
+
+    let fullText = "";
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const textContent = await page.getTextContent();
+      const pageText = textContent.items.map((item) => item.str).join(" ");
+      fullText += pageText + "\n";
+    }
 
     return {
-      text: data.text,
-      numPages: data.numpages,
-      info: data.info,
+      text: fullText,
+      numPages: pdf.numPages,
+      info: {},
     };
   } catch (error) {
     console.error("PDF parsing error:", error);
