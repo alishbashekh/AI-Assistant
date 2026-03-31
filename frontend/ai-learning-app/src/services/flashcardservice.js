@@ -19,7 +19,7 @@ const getFlashcardsForDocument = async (documentId) => {
 };
 const reviewFlashcard = async (cardId, cardIndex) => {
     try{
-     const response = await axiosInstance.get(API_PATHS.FLASHCARDS.REVIEW_FLASHCARD(cardId),{cardIndex});
+     const response = await axiosInstance.post(API_PATHS.FLASHCARDS.REVIEW_FLASHCARD(cardId),{cardIndex});
      return response.data;
     }catch(error){
         throw error.response?.data || { message: 'failed to review flashcard'};

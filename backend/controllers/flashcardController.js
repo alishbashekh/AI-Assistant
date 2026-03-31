@@ -44,7 +44,7 @@ export const getAllFlashcardSets = async (req, res, next)=>{
 export const reviewFlashcard = async (req, res, next)=>{
     try{
      const flashcardSet = await FlashCard.findOne({
-        'cards._id': req.params.CardId,
+        'cards._id': req.params.cardId,
         userId: req.user._id
      });
      if(!flashcardSet){
@@ -55,7 +55,7 @@ export const reviewFlashcard = async (req, res, next)=>{
         });
      }
     
-     const cardIndex = flashcardSet.cards.findIndex(card => card._id.toString() === req.params.CardId);
+     const cardIndex = flashcardSet.cards.findIndex(card => card._id.toString() === req.params.cardId);
      if (cardIndex === -1){
         return res.status(404).json({
             success: false,
@@ -85,7 +85,7 @@ export const reviewFlashcard = async (req, res, next)=>{
 export const toggleStarFlashcard = async (req, res, next)=>{
     try{
       const flashcardSet = await FlashCard.findOne({
-        'cards._id': req.params.CardId,
+        'cards._id': req.params.cardId,
         userId: req.user._id
       });
       if (!flashcardSet){
